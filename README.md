@@ -1,3 +1,3 @@
 # let'sExtend
 
-A description of this package.
+SwiftUI and Combine useful extensions.
