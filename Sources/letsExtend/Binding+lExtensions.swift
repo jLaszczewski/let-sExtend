@@ -7,14 +7,12 @@
 
 import SwiftUI
 
-/// source: https://www.hackingwithswift.com/articles/224/common-swiftui-mistakes-and-how-to-fix-them
-
 public extension Binding {
   
   /**
    This method alows to handle some action after property wrapper changed.
    
-   # Example of use: #
+   # Example #
    ```
      struct ContentView: View {
       @State private var rating = 0.0
@@ -28,6 +26,9 @@ public extension Binding {
       }
     }
    ```
+   
+   # Source #
+   https://www.hackingwithswift.com/articles/224/common-swiftui-mistakes-and-how-to-fix-them
    */
   func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
     Binding(
