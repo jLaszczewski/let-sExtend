@@ -7,12 +7,14 @@
 
 import Foundation
 
-// MARK: - Equaltable
-extension Array where Element: Equatable {
-  
+public extension Array {
   var isNotEmpty: Bool {
     !isEmpty
   }
+}
+
+// MARK: - Equaltable
+public extension Array where Element: Equatable {
   
   var areElementsEqual: Bool {
     guard let firstElement = self.first,
@@ -24,7 +26,27 @@ extension Array where Element: Equatable {
       othersElements: Array(self.dropFirst()))
   }
   
-  private static func areElementsEqual(
+  var areElementsNotEqual: Bool {
+    !areElementsEqual
+  }
+}
+
+// MARK: - Strings
+public extension Array where Element == String {
+  
+  var areStringsEmpty: Bool {
+    reduce(false) { $0 || $1.isEmpty }
+  }
+  
+  var areStringsNotEmpty: Bool {
+    !areStringsEmpty
+  }
+}
+
+// MARK: - Private
+private extension Array where Element: Equatable {
+  
+  static func areElementsEqual(
     currentElement: Element,
     othersElements: [Element]
   ) -> Bool {
@@ -34,21 +56,5 @@ extension Array where Element: Equatable {
       : areElementsEqual(
         currentElement: otherElement,
         othersElements: Array(othersElements.dropFirst()))
-  }
-  
-  var areElementsNotEqual: Bool {
-    !areElementsEqual
-  }
-}
-
-// MARK: - Strings
-extension Array where Element == String {
-  
-  var areStringsEmpty: Bool {
-    reduce(false) { $0 || $1.isEmpty }
-  }
-  
-  var areStringsNotEmpty: Bool {
-    !areStringsEmpty
   }
 }
