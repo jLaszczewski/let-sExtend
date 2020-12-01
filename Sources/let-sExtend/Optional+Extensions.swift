@@ -1,0 +1,23 @@
+//
+//  Optional+Extensions.swift
+//  
+//
+//  Created by Jakub Łaszczewski on 01/12/2020.
+//
+
+import Foundation
+
+extension Optional {
+  
+  var isNone: Bool {
+    switch self {
+    case .none: return true
+    case .some: return false
+    }
+  }
+  
+  var isSome: Bool {
+    !isNone
+  }
+}
+
