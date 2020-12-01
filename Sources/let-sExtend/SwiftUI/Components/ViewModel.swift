@@ -7,7 +7,7 @@
 
 import Combine
 
-public class ViewModel: ObservableObject {
+open public class ViewModel: ObservableObject {
   
   public var subscriptions = Set<AnyCancellable>()
   
