@@ -12,4 +12,6 @@ open class ViewModel: ObservableObject {
   public var subscriptions = Set<AnyCancellable>()
   
   @Published public var alert: ViewModelAlert?
+  
+  public init() {}
 }
