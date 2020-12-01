@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension String {
+public extension String {
   
   func delete(prefix: String) -> String {
     guard hasPrefix(prefix) else {
@@ -21,6 +21,7 @@ extension String {
     let start = self.index(self.startIndex, offsetBy: index)
     let end = self.index(self.startIndex, offsetBy: index + 1)
     let range = start..<end
+    
     return String(self[range])
   }
   
@@ -28,7 +29,7 @@ extension String {
     Int(self)
   }
   
-  public var isNotEmpty: Bool {
+  var isNotEmpty: Bool {
     !isEmpty
   }
   
@@ -62,7 +63,7 @@ extension String {
   }
 }
 
-extension Optional where Wrapped == String {
+public extension Optional where Wrapped == String {
   
   var isNoneOrEmpty: Bool {
     switch self {
