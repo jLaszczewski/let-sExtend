@@ -48,24 +48,24 @@ public struct TextFieldWithFocus: UIViewRepresentable {
     }
   }
   
-  @Binding var text: String
-  @Binding var isFirstResponder: Bool
-  @Binding var isSecure: Bool
+  @Binding public var text: String
+  @Binding public var isFirstResponder: Bool
+  @Binding public var isSecure: Bool
   
-  var placeholder: String
-  var textAlignment: NSTextAlignment = .left
-  var font: UIFont
-  var textColor: UIColor
-  var tintColor: UIColor
-  var keyboardType: UIKeyboardType = .default
-  var returnKeyType: UIReturnKeyType = .default
-  var textContentType: UITextContentType?
-  var autocorrectionType: UITextAutocorrectionType = .default
-  var autocapitalizationType: UITextAutocapitalizationType = .sentences
-  var textFieldBorderStyle: UITextField.BorderStyle = .none
-  var enablesReturnKeyAutomatically: Bool = false
+  public var placeholder: String
+  public var textAlignment: NSTextAlignment = .left
+  public var font: UIFont
+  public var textColor: UIColor
+  public var tintColor: UIColor
+  public var keyboardType: UIKeyboardType = .default
+  public var returnKeyType: UIReturnKeyType = .default
+  public var textContentType: UITextContentType?
+  public var autocorrectionType: UITextAutocorrectionType = .default
+  public var autocapitalizationType: UITextAutocapitalizationType = .sentences
+  public var textFieldBorderStyle: UITextField.BorderStyle = .none
+  public var enablesReturnKeyAutomatically: Bool = false
   
-  var onCommit: (() -> Void)?
+  public var onCommit: (() -> Void)?
   
   public func makeUIView(
     context: UIViewRepresentableContext<TextFieldWithFocus>

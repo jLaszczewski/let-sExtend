@@ -9,11 +9,11 @@ import SwiftUI
 
 public struct LoadingView<Content, Style: ProgressViewStyle>: View where Content: View {
   
-  @EnvironmentObject var loader: Loader
-  var style: Style
-  var loadingString: String
+  @EnvironmentObject public var loader: Loader
+  public var style: Style
+  public var loadingString: String
   
-  var content: () -> Content
+  public var content: () -> Content
   
   public var body: some View {
     GeometryReader { geometry in

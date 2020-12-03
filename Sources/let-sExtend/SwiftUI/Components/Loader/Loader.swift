@@ -19,7 +19,7 @@ public final class Loader: ObservableObject {
     willSet { state = newValue > 0 ? .loading : .content }
   }
   
-  init(actionsCount: Int = 0) {
+  public init(actionsCount: Int = 0) {
     self.state = actionsCount > 0 ? .loading : .content
     self.actionsCount = actionsCount
   }
