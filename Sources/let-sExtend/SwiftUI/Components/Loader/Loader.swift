@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Loader.swift
 //  
 //
 //  Created by Jakub Łaszczewski on 03/12/2020.

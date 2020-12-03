@@ -1,6 +1,6 @@
 //
 //  ViewModelAlert.swift
-//  iYoni
+//
 //
 //  Created by Jakub Łaszczewski on 01/12/2020.
 //
