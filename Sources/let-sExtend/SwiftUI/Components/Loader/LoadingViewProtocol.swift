@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  LoadingView.swift
 //  
 //
 //  Created by Jakub Łaszczewski on 03/12/2020.
@@ -7,14 +7,11 @@
 
 import SwiftUI
 
-public protocol LoadingView: View {
+public struct LoadingView<Content, Style: ProgressViewStyle>: View where Content: View {
   
-  associatedtype Content: View
-  associatedtype Style: ProgressViewStyle
-  
-  @EnvironmentObject public var loader: Loader { get }
-  public var style: Style { get }
-  public var loadingString: { get }
+  public var loader: Loader
+  public var style: Style
+  public var loadingString: String
   
   public var content: () -> Content
   
