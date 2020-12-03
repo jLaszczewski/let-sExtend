@@ -15,7 +15,7 @@ public struct LoadingView<Content, Style: ProgressViewStyle>: View where Content
   
   private var content: () -> Content
   
-  init(
+  public init(
     style: Style,
     loadingString: String,
     content: @escaping () -> Content

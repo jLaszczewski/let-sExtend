@@ -78,12 +78,12 @@ public struct Input: UIViewRepresentable {
     tintColor: UIColor,
     keyboardType: UIKeyboardType = .default,
     returnKeyType: UIReturnKeyType = .default,
-    textContentType: UITextContentType?,
+    textContentType: UITextContentType? = nil,
     autocorrectionType: UITextAutocorrectionType = .default,
     autocapitalizationType: UITextAutocapitalizationType = .sentences,
     textFieldBorderStyle: UITextField.BorderStyle = .none,
     enablesReturnKeyAutomatically: Bool = false,
-    onCommit: (() -> Void)?
+    onCommit: (() -> Void)? = nil
   ) {
     self._text = text
     self._isFirstResponder = isFirstResponder
