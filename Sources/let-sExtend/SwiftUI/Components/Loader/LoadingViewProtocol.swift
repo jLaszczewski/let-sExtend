@@ -1,5 +1,5 @@
 //
-//  LoadingViewProtocol.swift
+//  File.swift
 //  
 //
 //  Created by Jakub Łaszczewski on 03/12/2020.
@@ -7,26 +7,28 @@
 
 import SwiftUI
 
-public protocol LoadingViewProtocol: View {
+public protocol LoadingView: View {
   
   associatedtype Content: View
   associatedtype Style: ProgressViewStyle
   
-  var loader: Loader { get set }
+  @EnvironmentObject public var loader: Loader { get }
+  public var style: Style { get }
+  public var loadingString: { get }
   
-  var style: Style { get }
-  var loadingString: String { get }
+  public var content: () -> Content
   
-  var content: () -> Content { get }
-  
-  init(
+  public init(
+    loader: Loader,
     style: Style,
     loadingString: String,
     content: @escaping () -> Content
-  )
-}
-
-extension LoadingViewProtocol {
+  ) {
+    self.loader = loader
+    self.style = style
+    self.loadingString = loadingString
+    self.content = content
+  }
   
   public var body: some View {
     GeometryReader { geometry in
@@ -50,6 +52,18 @@ extension LoadingViewProtocol {
       .frame(
         width: geometry.frame(in: .global).width,
         height: geometry.frame(in: .global).height)
+    }
+  }
+}
+
+struct LoadingView_Previews: PreviewProvider {
+  static var previews: some View {
+    LoadingView(
+      loader: Loader(),
+      style: DefaultProgressViewStyle(),
+      loadingString: "Loading..."
+    ) {
+      Text("Hello world")
     }
   }
 }
