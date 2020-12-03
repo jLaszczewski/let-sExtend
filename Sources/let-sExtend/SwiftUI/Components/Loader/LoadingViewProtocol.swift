@@ -26,7 +26,7 @@ public protocol LoadingViewProtocol: View {
   )
 }
 
-extension LoadingView {
+extension LoadingViewProtocol {
   
   public var body: some View {
     GeometryReader { geometry in
