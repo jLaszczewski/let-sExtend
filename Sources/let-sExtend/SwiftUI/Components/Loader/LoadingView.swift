@@ -21,6 +21,7 @@ public struct LoadingView<Content, Style: ProgressViewStyle>: View where Content
     loadingString: String,
     content: @escaping () -> Content
   ) {
+    self.loader = loader
     self.style = style
     self.loadingString = loadingString
     self.content = content
