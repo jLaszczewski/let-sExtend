@@ -34,7 +34,7 @@ private final class TrackProgressSubscriber<Input, Faliure: Error>: Subscriber {
   }
   
   func receive(completion: Subscribers.Completion<Faliure>) {
-    guard loader.actionsCount < 0 else { return }
+    guard loader.actionsCount > 0 else { return }
     loader.actionsCount -= 1
   }
 }

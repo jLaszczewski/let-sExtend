@@ -9,13 +9,13 @@ import Combine
 
 public final class Loader: ObservableObject {
   
-  public enum State {
+  enum State {
     case loading
     case content
   }
   
-  @Published public var state: State = .content
-  @Published public var actionsCount: Int = 0 {
+  @Published var state: State = .content
+  @Published var actionsCount: Int = 0 {
     willSet { state = newValue > 0 ? .loading : .content }
   }
   

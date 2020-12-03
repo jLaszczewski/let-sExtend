@@ -9,19 +9,17 @@ import SwiftUI
 
 public struct LoadingView<Content, Style: ProgressViewStyle>: View where Content: View {
   
-  public var loader: Loader
-  public var style: Style
-  public var loadingString: String
+  @EnvironmentObject private var loader: Loader
+  private var style: Style
+  private var loadingString: String
   
-  public var content: () -> Content
+  private var content: () -> Content
   
   public init(
-    loader: Loader,
     style: Style,
     loadingString: String,
     content: @escaping () -> Content
   ) {
-    self.loader = loader
     self.style = style
     self.loadingString = loadingString
     self.content = content
@@ -56,7 +54,6 @@ public struct LoadingView<Content, Style: ProgressViewStyle>: View where Content
 struct LoadingView_Previews: PreviewProvider {
   static var previews: some View {
     LoadingView(
-      loader: Loader(),
       style: DefaultProgressViewStyle(),
       loadingString: "Loading..."
     ) {
