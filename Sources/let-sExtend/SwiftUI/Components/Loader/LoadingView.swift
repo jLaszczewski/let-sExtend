@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct LoadingView<Content, Style: ProgressViewStyle>: View where Content: View {
   
-  private var loader: Loader
+  public var loader: Loader
   private var style: Style
   private var loadingString: String
   
