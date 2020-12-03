@@ -9,11 +9,21 @@ import SwiftUI
 
 public struct LoadingView<Content, Style: ProgressViewStyle>: View where Content: View {
   
-  @EnvironmentObject public var loader: Loader
-  public var style: Style
-  public var loadingString: String
+  @EnvironmentObject private var loader: Loader
+  private var style: Style
+  private var loadingString: String
   
-  public var content: () -> Content
+  private var content: () -> Content
+  
+  init(
+    style: Style,
+    loadingString: String,
+    content: @escaping () -> Content
+  ) {
+    self.style = style
+    self.loadingString = loadingString
+    self.content = content
+  }
   
   public var body: some View {
     GeometryReader { geometry in
@@ -45,7 +55,8 @@ struct LoadingView_Previews: PreviewProvider {
   static var previews: some View {
     LoadingView(
       style: DefaultProgressViewStyle(),
-      loadingString: "Loading...") {
+      loadingString: "Loading..."
+    ) {
       Text("Hello world")
         .environmentObject(Loader(actionsCount: 1))
     }

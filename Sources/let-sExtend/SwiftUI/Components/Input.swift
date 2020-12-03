@@ -1,5 +1,5 @@
 //
-//  TextFieldWithFocus.swift
+//  Input.swift
 //  iYoni
 //
 //  Created by Jakub Łaszczewski on 27/11/2020.
@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 import SwiftUI
 
-public struct TextFieldWithFocus: UIViewRepresentable {
+public struct Input: UIViewRepresentable {
   
   public class Coordinator: NSObject, UITextFieldDelegate {
     
@@ -52,23 +52,59 @@ public struct TextFieldWithFocus: UIViewRepresentable {
   @Binding public var isFirstResponder: Bool
   @Binding public var isSecure: Bool
   
-  public var placeholder: String
-  public var textAlignment: NSTextAlignment = .left
-  public var font: UIFont
-  public var textColor: UIColor
-  public var tintColor: UIColor
-  public var keyboardType: UIKeyboardType = .default
-  public var returnKeyType: UIReturnKeyType = .default
-  public var textContentType: UITextContentType?
-  public var autocorrectionType: UITextAutocorrectionType = .default
-  public var autocapitalizationType: UITextAutocapitalizationType = .sentences
-  public var textFieldBorderStyle: UITextField.BorderStyle = .none
-  public var enablesReturnKeyAutomatically: Bool = false
+  private var placeholder: String
+  private var textAlignment: NSTextAlignment = .left
+  private var font: UIFont
+  private var textColor: UIColor
+  private var tintColor: UIColor
+  private var keyboardType: UIKeyboardType = .default
+  private var returnKeyType: UIReturnKeyType = .default
+  private var textContentType: UITextContentType?
+  private var autocorrectionType: UITextAutocorrectionType = .default
+  private var autocapitalizationType: UITextAutocapitalizationType = .sentences
+  private var textFieldBorderStyle: UITextField.BorderStyle = .none
+  private var enablesReturnKeyAutomatically: Bool = false
   
   public var onCommit: (() -> Void)?
   
+  public init(
+    text: Binding<String>,
+    isFirstResponder: Binding<Bool>,
+    isSecure: Binding<Bool>,
+    placeholder: String,
+    textAlignment: NSTextAlignment = .left,
+    font: UIFont,
+    textColor: UIColor,
+    tintColor: UIColor,
+    keyboardType: UIKeyboardType = .default,
+    returnKeyType: UIReturnKeyType = .default,
+    textContentType: UITextContentType?,
+    autocorrectionType: UITextAutocorrectionType = .default,
+    autocapitalizationType: UITextAutocapitalizationType = .sentences,
+    textFieldBorderStyle: UITextField.BorderStyle = .none,
+    enablesReturnKeyAutomatically: Bool = false,
+    onCommit: (() -> Void)?
+  ) {
+    self._text = text
+    self._isFirstResponder = isFirstResponder
+    self._isSecure = isSecure
+    self.placeholder = placeholder
+    self.textAlignment = textAlignment
+    self.font = font
+    self.textColor = textColor
+    self.tintColor = tintColor
+    self.keyboardType = keyboardType
+    self.returnKeyType = returnKeyType
+    self.textContentType = textContentType
+    self.autocorrectionType = autocorrectionType
+    self.autocapitalizationType = autocapitalizationType
+    self.textFieldBorderStyle = textFieldBorderStyle
+    self.enablesReturnKeyAutomatically = enablesReturnKeyAutomatically
+    self.onCommit = onCommit
+  }
+  
   public func makeUIView(
-    context: UIViewRepresentableContext<TextFieldWithFocus>
+    context: UIViewRepresentableContext<Input>
   ) -> UITextField {
     let textField = UITextField(frame: .zero)
     textField.delegate = context.coordinator
@@ -88,7 +124,7 @@ public struct TextFieldWithFocus: UIViewRepresentable {
     return textField
   }
   
-  public func makeCoordinator() -> TextFieldWithFocus.Coordinator {
+  public func makeCoordinator() -> Input.Coordinator {
     return Coordinator(
       text: $text,
       isFirstResponder: $isFirstResponder,
@@ -99,7 +135,7 @@ public struct TextFieldWithFocus: UIViewRepresentable {
   
   public func updateUIView(
     _ uiView: UITextField,
-    context: UIViewRepresentableContext<TextFieldWithFocus>
+    context: UIViewRepresentableContext<Input>
   ) {
     uiView.text = text
     uiView.isSecureTextEntry = isSecure
