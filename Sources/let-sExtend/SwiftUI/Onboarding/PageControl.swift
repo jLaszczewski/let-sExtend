@@ -8,7 +8,7 @@
 import UIKit
 import SwiftUI
 
-struct PageControl: UIViewRepresentable {
+public struct PageControl: UIViewRepresentable {
   
   @Binding var currentPageIndex: Int
   
