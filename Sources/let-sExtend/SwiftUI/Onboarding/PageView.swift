@@ -14,6 +14,14 @@ public struct PageView: UIViewControllerRepresentable {
   
   let viewControllers: [UIViewController]
   
+  public init(
+    currentPageIndex: Binding<Int>,
+    viewControllers: [UIViewController]
+  ) {
+    self._currentPageIndex = currentPageIndex
+    self.viewControllers = viewControllers
+  }
+  
   public func makeCoordinator() -> Coordinator {
     Coordinator(self)
   }

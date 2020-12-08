@@ -15,7 +15,21 @@ public struct PageControl: UIViewRepresentable {
   var numberOfPages: Int
   var indicatorColor: Color
   var currentIndicatorColor: Color
-  var scale: CGFloat = 1
+  var scale: CGFloat
+  
+  public init(
+    currentPageIndex: Binding<Int>,
+    numberOfPages: Int,
+    indicatorColor: Color,
+    currentIndicatorColor: Color,
+    scale: CGFloat = 1
+  ) {
+    self._currentPageIndex = currentPageIndex
+    self.numberOfPages = numberOfPages
+    self.indicatorColor = indicatorColor
+    self.currentIndicatorColor = currentIndicatorColor
+    self.scale = scale
+  }
   
   public func makeUIView(context: Context) -> UIPageControl {
     let control = UIPageControl()
