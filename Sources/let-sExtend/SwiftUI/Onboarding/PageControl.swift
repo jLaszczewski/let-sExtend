@@ -17,7 +17,7 @@ public struct PageControl: UIViewRepresentable {
   var currentIndicatorColor: Color
   var scale: CGFloat = 1
   
-  func makeUIView(context: Context) -> UIPageControl {
+  public func makeUIView(context: Context) -> UIPageControl {
     let control = UIPageControl()
     control.numberOfPages = numberOfPages
     control.currentPageIndicatorTintColor = UIColor(currentIndicatorColor)
@@ -27,7 +27,7 @@ public struct PageControl: UIViewRepresentable {
     return control
   }
   
-  func updateUIView(_ uiView: UIPageControl, context: Context) {
+  public func updateUIView(_ uiView: UIPageControl, context: Context) {
     uiView.currentPage = currentPageIndex
   }
 }

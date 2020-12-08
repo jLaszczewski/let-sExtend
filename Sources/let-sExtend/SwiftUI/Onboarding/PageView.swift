@@ -14,11 +14,11 @@ public struct PageView: UIViewControllerRepresentable {
   
   let viewControllers: [UIViewController]
   
-  func makeCoordinator() -> Coordinator {
+  public func makeCoordinator() -> Coordinator {
     Coordinator(self)
   }
   
-  func makeUIViewController(context: Context) -> UIPageViewController {
+  public func makeUIViewController(context: Context) -> UIPageViewController {
     let pageViewController = UIPageViewController(
       transitionStyle: .scroll,
       navigationOrientation: .horizontal)
@@ -27,7 +27,7 @@ public struct PageView: UIViewControllerRepresentable {
     return pageViewController
   }
   
-  func updateUIViewController(
+  public func updateUIViewController(
     _ pageViewController: UIPageViewController,
     context: Context
   ) {
@@ -37,7 +37,7 @@ public struct PageView: UIViewControllerRepresentable {
       animated: true)
   }
   
-  class Coordinator: NSObject, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+  public class Coordinator: NSObject, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
     var parent: PageView
 
@@ -45,7 +45,7 @@ public struct PageView: UIViewControllerRepresentable {
       self.parent = pageViewController
     }
     
-    func pageViewController(
+    public func pageViewController(
       _ pageViewController: UIPageViewController,
       viewControllerBefore viewController: UIViewController
     ) -> UIViewController? {
@@ -58,7 +58,7 @@ public struct PageView: UIViewControllerRepresentable {
       return parent.viewControllers[index - 1]
     }
             
-    func pageViewController(
+    public func pageViewController(
       _ pageViewController: UIPageViewController,
       viewControllerAfter viewController: UIViewController
     ) -> UIViewController? {
@@ -71,7 +71,7 @@ public struct PageView: UIViewControllerRepresentable {
       return parent.viewControllers[index + 1]
     }
     
-    func pageViewController(
+    public func pageViewController(
       _ pageViewController: UIPageViewController,
       didFinishAnimating finished: Bool,
       previousViewControllers: [UIViewController],
