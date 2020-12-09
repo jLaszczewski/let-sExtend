@@ -10,7 +10,7 @@ import SwiftUI
 
 public struct PageView: UIViewControllerRepresentable {
   
-  @Binding var currentPageIndex: Int
+  @Binding public var currentPageIndex: Int
   
   let viewControllers: [UIViewController]
   

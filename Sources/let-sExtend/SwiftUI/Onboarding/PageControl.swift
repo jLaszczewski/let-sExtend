@@ -10,7 +10,7 @@ import SwiftUI
 
 public struct PageControl: UIViewRepresentable {
   
-  @Binding var currentPageIndex: Int
+  @Binding public var currentPageIndex: Int
   
   var numberOfPages: Int
   var indicatorColor: Color
