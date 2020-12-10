@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Array+Extensions.swift
 //  
 //
 //  Created by Jakub Łaszczewski on 30/11/2020.

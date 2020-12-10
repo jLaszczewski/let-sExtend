@@ -1,6 +1,6 @@
 //
 //  PageControl.swift
-//  iYoni
+//  
 //
 //  Created by ITgenerator on 03/12/2020.
 //

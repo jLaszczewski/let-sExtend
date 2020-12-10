@@ -1,9 +1,8 @@
 //
 //  String+RegularExrepssion.swift
-//  Fit Dostawcy
+//
 //
 //  Created by Jakub Łaszczewski on 23/04/2019.
-//  Copyright © 2019 Jakub Łaszczewski. All rights reserved.
 //
 
 import Foundation

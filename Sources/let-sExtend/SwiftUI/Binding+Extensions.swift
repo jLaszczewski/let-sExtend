@@ -1,5 +1,5 @@
 //
-//  Binding+lExtensions.swift
+//  Binding+Extensions.swift
 //  
 //
 //  Created by Jakub Łaszczewski on 13/11/2020.

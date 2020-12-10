@@ -1,6 +1,6 @@
 //
 //  PageViewController.swift
-//  iYoni
+//  
 //
 //  Created by ITgenerator on 03/12/2020.
 //
@@ -44,11 +44,16 @@ public struct PageView: UIViewControllerRepresentable {
       direction: .forward,
       animated: true)
   }
+}
+
+public extension PageView {
   
-  public class Coordinator: NSObject, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+  class Coordinator: NSObject,
+                            UIPageViewControllerDataSource,
+                            UIPageViewControllerDelegate {
     
     var parent: PageView
-
+    
     init(_ pageViewController: PageView) {
       self.parent = pageViewController
     }
@@ -65,7 +70,7 @@ public struct PageView: UIViewControllerRepresentable {
       
       return parent.viewControllers[index - 1]
     }
-            
+    
     public func pageViewController(
       _ pageViewController: UIPageViewController,
       viewControllerAfter viewController: UIViewController
@@ -92,4 +97,13 @@ public struct PageView: UIViewControllerRepresentable {
       }
     }
   }
+}
+
+struct PageView_Previews: PreviewProvider {
+  
+  static var previews: some View {
+    PageView(
+      currentPageIndex: .constant(1),
+      viewControllers: [])
+    }
 }
