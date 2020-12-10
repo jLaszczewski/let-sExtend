@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  String+HTML.swift
 //  
 //
 //  Created by Jakub Łaszczewski on 01/12/2020.

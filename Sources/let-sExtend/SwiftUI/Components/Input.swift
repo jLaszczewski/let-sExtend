@@ -12,42 +12,6 @@ import SwiftUI
 
 public struct Input: UIViewRepresentable {
   
-  public class Coordinator: NSObject, UITextFieldDelegate {
-    
-    @Binding var text: String
-    @Binding var isFirstResponder: Bool
-        
-    var onCommit: () -> Void
-    
-    init(
-      text: Binding<String>,
-      isFirstResponder: Binding<Bool>,
-      onCommit: @escaping () -> Void
-    ) {
-      _text = text
-      _isFirstResponder = isFirstResponder
-      self.onCommit = onCommit
-    }
-    
-    public func textFieldDidChangeSelection(_ textField: UITextField) {
-      text = textField.text ?? ""
-    }
-    
-    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-      isFirstResponder = false
-      onCommit()
-      return true
-    }
-    
-    public func textFieldDidEndEditing(_ textField: UITextField) {
-      isFirstResponder = false
-    }
-    
-    public func textFieldDidBeginEditing(_ textField: UITextField) {
-      isFirstResponder = true
-    }
-  }
-  
   @Binding public var text: String
   @Binding public var isFirstResponder: Bool
   @Binding public var isSecure: Bool
@@ -140,4 +104,44 @@ public struct Input: UIViewRepresentable {
     uiView.text = text
     uiView.isSecureTextEntry = isSecure
   }
+}
+
+public extension Input {
+  
+  class Coordinator: NSObject, UITextFieldDelegate {
+    
+    @Binding var text: String
+    @Binding var isFirstResponder: Bool
+    
+    var onCommit: () -> Void
+    
+    init(
+      text: Binding<String>,
+      isFirstResponder: Binding<Bool>,
+      onCommit: @escaping () -> Void
+    ) {
+      _text = text
+      _isFirstResponder = isFirstResponder
+      self.onCommit = onCommit
+    }
+    
+    public func textFieldDidChangeSelection(_ textField: UITextField) {
+      text = textField.text ?? ""
+    }
+    
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+      isFirstResponder = false
+      onCommit()
+      return true
+    }
+    
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+      isFirstResponder = false
+    }
+    
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
+      isFirstResponder = true
+    }
+  }
+
 }
