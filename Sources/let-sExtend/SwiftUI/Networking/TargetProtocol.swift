@@ -18,7 +18,7 @@ public extension TargetProtocol {
   
   var baseURL: URL { request.baseURL }
   var path: String { request.path }
-  var method: Method { request.method }
+  var method: RequestMethod { request.method }
   var headers: [String: String] { request.headers }
   var parameters: [String: String] { request.parameters }
 }

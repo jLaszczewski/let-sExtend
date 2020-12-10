@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Method: String {
+public enum RequestMethod: String {
   
   case get = "GET"
   case post = "POST"
@@ -19,7 +19,7 @@ public protocol RequestProtocol {
   
   var baseURL: URL { get }
   var path: String { get }
-  var method: Method { get }
+  var method: RequestMethod { get }
   var headers: [String: String] { get }
   var parameters: [String: String] { get }
   var body: Data? { get }

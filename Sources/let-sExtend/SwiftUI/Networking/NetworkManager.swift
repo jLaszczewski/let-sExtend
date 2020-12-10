@@ -15,7 +15,7 @@ public protocol NetworkManagerProtocol {
   var subscriptions: Set<AnyCancellable> { get set }
 }
 
-public class NetworkManager<Target: TargetProtocol>: NSObject,
+open class NetworkManager<Target: TargetProtocol>: NSObject,
                                                      NetworkManagerProtocol {
   
   public var subscriptions = Set<AnyCancellable>()
