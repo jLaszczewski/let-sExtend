@@ -7,7 +7,7 @@
 
 import Combine
 
-extension Error {
+public extension Error {
   
   func fail<Output, Faliure: Error>() -> AnyPublisher<Output, Faliure> {
     Fail<Output, Faliure>(error: self as! Faliure).eraseToAnyPublisher()

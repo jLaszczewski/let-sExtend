@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Method: String {
+public enum Method: String {
   
   case get = "GET"
   case post = "POST"
@@ -15,7 +15,7 @@ enum Method: String {
   case delete = "DELETE"
 }
 
-protocol RequestProtocol {
+public protocol RequestProtocol {
   
   var baseURL: URL { get }
   var path: String { get }
@@ -26,7 +26,7 @@ protocol RequestProtocol {
 }
 
 // MARK: - Getters
-extension RequestProtocol {
+public extension RequestProtocol {
   
   var url: URL {
     if queryItems.isEmpty {

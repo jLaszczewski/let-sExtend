@@ -7,18 +7,18 @@
 
 import Foundation
 
-protocol TargetProtocol {
-    
-    associatedtype Request: RequestProtocol
-    
-    var request: Request { get }
+public protocol TargetProtocol {
+  
+  associatedtype Request: RequestProtocol
+  
+  var request: Request { get }
 }
 
-extension TargetProtocol {
-    
-    var baseURL: URL { request.baseURL }
-    var path: String { request.path }
-    var method: Method { request.method }
-    var headers: [String: String] { request.headers }
-    var parameters: [String: String] { request.parameters }
+public extension TargetProtocol {
+  
+  var baseURL: URL { request.baseURL }
+  var path: String { request.path }
+  var method: Method { request.method }
+  var headers: [String: String] { request.headers }
+  var parameters: [String: String] { request.parameters }
 }

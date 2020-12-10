@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-extension Publisher where Output == (data: Data, response: URLResponse) {
+public extension Publisher where Output == (data: Data, response: URLResponse) {
 
   func filterSuccessfulStatus(
     isDebuging: Bool,
@@ -35,7 +35,7 @@ extension Publisher where Output == (data: Data, response: URLResponse) {
   }
 }
 
-extension Publisher where Output == Data {
+public extension Publisher where Output == Data {
   
   func map<D: Decodable>(
     _ type: D.Type,
@@ -46,14 +46,14 @@ extension Publisher where Output == Data {
   }
 }
 
-extension Publisher {
+public extension Publisher {
   
   func mapToEmpty() -> AnyPublisher<Void, Failure> {
     map { _ in () }.eraseToAnyPublisher()
   }
 }
 
-extension Just {
+public extension Just {
   
   func withFailureType<E: Error>() -> AnyPublisher<Output, E> {
     setFailureType(to: E.self)

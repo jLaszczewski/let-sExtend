@@ -8,14 +8,14 @@
 import Combine
 import Foundation
 
-struct EmptyResponseMock: Encodable {}
+public struct EmptyResponseMock: Encodable {}
 
-protocol NetworkManagerProtocolMock: NetworkManagerProtocol {
+public protocol NetworkManagerProtocolMock: NetworkManagerProtocol {
   
   var error: URLError? { get set }
 }
 
-extension NetworkManagerProtocolMock {
+public extension NetworkManagerProtocolMock {
   
   func action<E: Encodable>(
     response: E? = nil, _ type: E.Type

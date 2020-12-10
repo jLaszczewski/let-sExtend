@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension Text {
+public extension Text {
   
   init?(_ key: String?) {
     guard let key = key else { return nil }
@@ -15,7 +15,7 @@ extension Text {
   }
 }
 
-extension View {
+public extension View {
   
   @ViewBuilder func hidden(_ hidden: Bool) -> some View {
     switch hidden {

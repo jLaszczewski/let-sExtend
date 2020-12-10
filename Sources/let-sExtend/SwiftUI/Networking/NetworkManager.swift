@@ -8,14 +8,15 @@
 import Combine
 import Foundation
 
-protocol NetworkManagerProtocol {
+public protocol NetworkManagerProtocol {
   
   associatedtype Target: TargetProtocol
   
   var subscriptions: Set<AnyCancellable> { get set }
 }
 
-class NetworkManager<Target: TargetProtocol>: NSObject, NetworkManagerProtocol {
+public class NetworkManager<Target: TargetProtocol>: NSObject,
+                                                     NetworkManagerProtocol {
   
-  var subscriptions = Set<AnyCancellable>()
+  public var subscriptions = Set<AnyCancellable>()
 }
