@@ -8,8 +8,19 @@
 import Foundation
 
 public extension Array {
+  
   var isNotEmpty: Bool {
     !isEmpty
+  }
+  
+  func last(_ itemsCount: Int) -> [Element]? {
+    guard itemsCount <= count else { return nil }
+    return (0 ..< itemsCount).map { self[count - itemsCount + $0] }
+  }
+  
+  func first(_ itemsCount: Int) -> [Element]? {
+    guard itemsCount <= count else { return nil }
+    return (0 ..< itemsCount).map { self[$0] }
   }
 }
 
