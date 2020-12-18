@@ -40,9 +40,15 @@ public extension Publisher where Output == Data {
   func map<D: Decodable>(
     _ type: D.Type,
     using decoder: JSONDecoder = JSONDecoder()
-  ) -> AnyPublisher<D?, Failure> {
-    map { try? decoder.decode(type, from: $0) }
-      .eraseToAnyPublisher()
+  ) -> AnyPublisher<D, Error> {
+    tryMap {
+      do {
+        return try decoder.decode(type, from: $0)
+      } catch {
+        throw error
+      }
+    }
+    .eraseToAnyPublisher()
   }
 }
 
