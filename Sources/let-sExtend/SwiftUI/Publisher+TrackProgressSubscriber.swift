@@ -11,9 +11,7 @@ import Foundation
 public extension Publisher {
 
   func trackActivity(with loader: Loader) -> Self {
-    receive(on: RunLoop.main)
-      .subscribe(TrackProgressSubscriber(loader: loader))
-      
+    subscribe(TrackProgressSubscriber(loader: loader))
     return self
   }
 }
@@ -27,8 +25,10 @@ private final class TrackProgressSubscriber<Input, Faliure: Error>: Subscriber {
   }
   
   func receive(subscription: Subscription) {
-    loader.actionsCount += 1
-    subscription.request(.unlimited)
+    DispatchQueue.main.async {
+      self.loader.actionsCount += 1
+      subscription.request(.unlimited)
+    }
   }
   
   func receive(_ input: Input) -> Subscribers.Demand {
@@ -37,6 +37,8 @@ private final class TrackProgressSubscriber<Input, Faliure: Error>: Subscriber {
   
   func receive(completion: Subscribers.Completion<Faliure>) {
     guard loader.actionsCount > 0 else { return }
-    loader.actionsCount -= 1
+    DispatchQueue.main.async {
+      self.loader.actionsCount -= 1
+    }
   }
 }
