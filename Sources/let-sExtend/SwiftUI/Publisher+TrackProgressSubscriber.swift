@@ -25,10 +25,8 @@ private final class TrackProgressSubscriber<Input, Faliure: Error>: Subscriber {
   }
   
   func receive(subscription: Subscription) {
-    DispatchQueue.main.async {
-      self.loader.actionsCount += 1
-      subscription.request(.unlimited)
-    }
+    self.loader.actionsCount += 1
+    subscription.request(.unlimited)
   }
   
   func receive(_ input: Input) -> Subscribers.Demand {
@@ -37,8 +35,6 @@ private final class TrackProgressSubscriber<Input, Faliure: Error>: Subscriber {
   
   func receive(completion: Subscribers.Completion<Faliure>) {
     guard loader.actionsCount > 0 else { return }
-    DispatchQueue.main.async {
-      self.loader.actionsCount -= 1
-    }
+    self.loader.actionsCount -= 1
   }
 }
