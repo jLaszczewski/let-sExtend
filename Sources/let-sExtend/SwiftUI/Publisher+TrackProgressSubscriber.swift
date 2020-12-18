@@ -11,7 +11,9 @@ import Foundation
 public extension Publisher {
 
   func trackActivity(with loader: Loader) -> Self {
-    self.subscribe(TrackProgressSubscriber(loader: loader))
+    receive(on: RunLoop.main)
+      .subscribe(TrackProgressSubscriber(loader: loader))
+      
     return self
   }
 }
