@@ -25,16 +25,22 @@ private final class TrackProgressSubscriber<Input, Faliure: Error>: Subscriber {
   }
   
   func receive(subscription: Subscription) {
-    self.loader.actionsCount += 1
-    subscription.request(.unlimited)
+    DispatchQueue.main.async {
+      self.loader.actionsCount += 1
+      subscription.request(.unlimited)
+    }
   }
   
   func receive(_ input: Input) -> Subscribers.Demand {
-    return .none
+    DispatchQueue.main.async {
+      return .none
+    }
   }
   
   func receive(completion: Subscribers.Completion<Faliure>) {
-    guard loader.actionsCount > 0 else { return }
-    self.loader.actionsCount -= 1
+    DispatchQueue.main.async {
+      guard loader.actionsCount > 0 else { return }
+      self.loader.actionsCount -= 1
+    }
   }
 }
