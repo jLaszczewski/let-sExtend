@@ -32,14 +32,12 @@ private final class TrackProgressSubscriber<Input, Faliure: Error>: Subscriber {
   }
   
   func receive(_ input: Input) -> Subscribers.Demand {
-    DispatchQueue.main.async {
-      return .none
-    }
+    return .none
   }
   
   func receive(completion: Subscribers.Completion<Faliure>) {
     DispatchQueue.main.async {
-      guard loader.actionsCount > 0 else { return }
+      guard self.loader.actionsCount > 0 else { return }
       self.loader.actionsCount -= 1
     }
   }
