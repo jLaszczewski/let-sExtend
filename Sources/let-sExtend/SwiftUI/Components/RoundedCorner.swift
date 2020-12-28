@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct RoundedCorner: Shape {
+public struct RoundedCorner: Shape {
   
-  var radius: CGFloat = .infinity
-  var corners: UIRectCorner = .allCorners
+  public var radius: CGFloat = .infinity
+  public var corners: UIRectCorner = .allCorners
   
   func path(in rect: CGRect) -> Path {
     let path = UIBezierPath(
@@ -24,7 +24,10 @@ struct RoundedCorner: Shape {
 // MARK: - Modifier
 extension View {
   
-  func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+  public func cornerRadius(
+    _ radius: CGFloat,
+    corners: UIRectCorner
+  ) -> some View {
     clipShape(RoundedCorner(radius: radius, corners: corners))
   }
 }
