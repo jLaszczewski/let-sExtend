@@ -9,9 +9,19 @@ import SwiftUI
 
 public struct Separator {
   
-  public var color: Color
-  public var axis: Axis
-  public var size: CGFloat = 1
+  public let color: Color
+  public let axis: Axis
+  public let size: CGFloat
+  
+  public init(
+    color: Color,
+    axis: Axis,
+    size: CGFloat = 1
+  ) {
+    self.color = color
+    self.axis = axis
+    self.size = size
+  }
 }
 
 extension Separator: View {
