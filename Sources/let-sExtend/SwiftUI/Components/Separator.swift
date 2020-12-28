@@ -16,7 +16,7 @@ public struct Separator {
 
 extension Separator: View {
   
-  var body: some View {
+  public var body: some View {
     if axis == Axis.horizontal {
       color.frame(height: size)
     } else {
