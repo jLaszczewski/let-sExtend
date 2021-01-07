@@ -26,7 +26,7 @@ public struct ColoredToggleStyle: ToggleStyle {
     self.rightCircleColor = rightCircleColor
   }
   
-  func makeBody(configuration: Configuration) -> some View {
+  public func makeBody(configuration: Configuration) -> some View {
     HStack {
       configuration.label
       Spacer()
