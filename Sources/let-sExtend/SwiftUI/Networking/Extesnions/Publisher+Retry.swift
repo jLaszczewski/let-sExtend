@@ -1,11 +1,11 @@
 //
-//  retry.swift
+//  Publisher+Retry.swift
 //  
 //
 //  Created by Jakub Łaszczewski on 11/01/2021.
 //
 
-import Foundation
+import Combine
 
 public extension Publishers {
   
