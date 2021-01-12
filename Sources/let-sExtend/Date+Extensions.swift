@@ -52,16 +52,15 @@ public extension Date {
   }
   
   func daysRange(
-    till tillDate: Date,
+    to toDate: Date,
     calendar: Calendar = Calendar.current
   ) -> [Date] {
-    let sinceDate = self.withoutTimeStamp(calendar: calendar)
-    let tillDate = tillDate.withoutTimeStamp(calendar: calendar)
+    let fromDate = self.withoutTimeStamp()
+    let toDate = toDate
+    let daysCount = days(to: toDate, calendar: calendar)
     
-    return sinceDate.daysRange(
-      till: tillDate,
-      collectedDates: [],
-      calendar: calendar)
+    return (0...daysCount)
+      .map { fromDate.byAdding($0, .day, calendar: calendar) }
   }
   
   func withoutTimeStamp(calendar: Calendar = .current) -> Date {
@@ -86,21 +85,31 @@ public extension Date {
       value: value,
       to: self)!
   }
-}
-
-// MARK: - private
-private extension Date {
   
-  func daysRange(
-    till tillDate: Date,
-    collectedDates: [Date],
-    calendar: Calendar
-  ) -> [Date] {
-    guard self <= tillDate else { return collectedDates }
-    return calendar.date(byAdding: .day, value: 1, to: self)!
-      .daysRange(
-        till: tillDate,
-        collectedDates: collectedDates + [self],
-        calendar: calendar)
+  func days(to toDate: Date, calendar: Calendar = .current) -> Int {
+    calendar
+      .dateComponents(
+        [.day],
+        from: self,
+        to: toDate)
+      .day!
+  }
+  
+  func months(to toDate: Date, calendar: Calendar = .current) -> Int {
+    calendar
+      .dateComponents(
+        [.month],
+        from: self,
+        to: toDate)
+      .month!
+  }
+  
+  func years(to toDate: Date, calendar: Calendar = .current) -> Int {
+    calendar
+      .dateComponents(
+        [.year],
+        from: self,
+        to: toDate)
+      .year!
   }
 }

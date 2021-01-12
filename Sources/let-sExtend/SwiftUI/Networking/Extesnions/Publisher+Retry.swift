@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Foundation
 
 public extension Publishers {
   
@@ -34,7 +35,9 @@ public extension Publishers {
       guard retries > 0
       else { return publisher.receive(subscriber: subscriber) }
       
-      publisher.catch { (error: P.Failure) -> AnyPublisher<Output, Failure> in
+      publisher
+        .delay(for: 1, scheduler: RunLoop.current)
+        .catch { (error: P.Failure) -> AnyPublisher<Output, Failure> in
         if condition(error)  {
           return ConditionalRetry(publisher, retries - 1, when: condition)
             .eraseToAnyPublisher()

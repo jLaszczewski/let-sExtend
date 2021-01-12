@@ -21,3 +21,11 @@ public extension Optional {
   }
 }
 
+// MARK: - Optional Bool
+public extension Optional where Wrapped == Bool {
+  
+  var isNoneOrFalse: Bool {
+    guard let self = self else { return true }
+    return !self
+  }
+}
