@@ -11,7 +11,7 @@ import Foundation
 public extension Publisher where Output == (data: Data, response: URLResponse) {
 
   func filterSuccessfulStatus(
-    isDebuging: Bool,
+    isDebugging: Bool,
     filterFucntion: @escaping (
       URLResponse,
       Data,
@@ -22,7 +22,7 @@ public extension Publisher where Output == (data: Data, response: URLResponse) {
       switch filterFucntion(
         result.response,
         result.data,
-        isDebuging) {
+        isDebugging) {
       case let .success(data):
         return Just(data)
           .setFailureType(to: Failure.self)
