@@ -37,15 +37,15 @@ public extension Publishers {
       
       publisher
         .catch { (error: P.Failure) -> AnyPublisher<Output, Failure> in
-        if condition(error)  {
-          sleep(UInt32(1))
-          return ConditionalRetry(publisher, retries - 1, when: condition)
-            .eraseToAnyPublisher()
-        } else {
-          return error.fail()
+          if condition(error)  {
+            return ConditionalRetry(publisher, retries - 1, when: condition)
+              .delay(for: 3, scheduler: RunLoop.current)
+              .eraseToAnyPublisher()
+          } else {
+            return error.fail()
+          }
         }
-      }
-      .receive(subscriber: subscriber)
+        .receive(subscriber: subscriber)
     }
   }
 }
