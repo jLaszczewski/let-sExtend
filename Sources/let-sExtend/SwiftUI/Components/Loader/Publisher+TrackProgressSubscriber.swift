@@ -49,6 +49,11 @@ private extension Publishers {
             guard self.loader.actionsCount > 0 else { return }
             self.loader.actionsCount -= 1
           }
+        }, receiveCompletion: { completion in
+          if case .failure = completion {
+            guard self.loader.actionsCount > 0 else { return }
+            self.loader.actionsCount -= 1
+          }
         })
         .receive(subscriber: subscriber)
     }
