@@ -22,21 +22,17 @@ public extension Date {
     return dateWihoutStamp == otherDateWithoutStamp
   }
   
-  func startOfMonth(
+  func startOfDay(
     calendar: Calendar = .current
   ) -> Date {
-    let components = calendar.dateComponents(
-      [.year, .month],
-      from: self)
-    
-    return Date(timeIntervalSince1970: calendar.date(from: components)!.timeIntervalSince1970)
+    calendar.startOfDay(for: self)
   }
   
-  func endOfMonth(
-    calendar: Calendar = Calendar.current
+  func endOfDay(
+    calendar: Calendar = .current
   ) -> Date {
-    self
-      .byAdding(1, .month, calendar: calendar)
+    startOfDay(calendar: calendar)
+      .byAdding(1, .day, calendar: calendar)
       .byAdding(-1, .second, calendar: calendar)
   }
   
@@ -46,17 +42,45 @@ public extension Date {
     var components = calendar.dateComponents(
       [.year, .weekOfYear, .month, .weekday],
       from: self)
-    components.weekday = 2
+    components.weekday = calendar.firstWeekday
     
     return calendar.date(from: components)!
+  }
+  
+  func endOfWeek(
+    calendar: Calendar = Calendar.current
+  ) -> Date {
+    startOfWeek(calendar: calendar)
+      .byAdding(1, .weekOfYear, calendar: calendar)
+      .byAdding(-1, .second, calendar: calendar)
+  }
+  
+  func startOfMonth(
+    calendar: Calendar = .current
+  ) -> Date {
+    let components = calendar.dateComponents(
+      [.year, .month],
+      from: self)
+    
+    return Date(
+      timeIntervalSince1970: calendar.date(from: components)!
+        .timeIntervalSince1970)
+  }
+  
+  func endOfMonth(
+    calendar: Calendar = Calendar.current
+  ) -> Date {
+    startOfMonth(calendar: calendar)
+      .byAdding(1, .month, calendar: calendar)
+      .byAdding(-1, .second, calendar: calendar)
   }
   
   func daysRange(
     to toDate: Date,
     calendar: Calendar = Calendar.current
   ) -> [Date] {
-    let fromDate = self.withoutTimeStamp()
-    let toDate = toDate
+    let fromDate = self.startOfDay(calendar: calendar)
+    let toDate = toDate.endOfDay(calendar: calendar)
     let daysCount = days(to: toDate, calendar: calendar)
     
     return (0...daysCount)
@@ -111,5 +135,16 @@ public extension Date {
         from: self,
         to: toDate)
       .year!
+  }
+  
+  func isDayBetween(
+    _ date1: Date,
+    and date2: Date,
+    calendar: Calendar =  .current
+  ) -> Bool {
+    let date1 = date1.startOfDay(calendar: calendar)
+    let date2 = date2.endOfDay(calendar: calendar)
+    
+    return (min(date1, date2) ... max(date1, date2)).contains(self)
   }
 }
