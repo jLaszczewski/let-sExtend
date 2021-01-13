@@ -62,9 +62,7 @@ public extension Date {
       [.year, .month],
       from: self)
     
-    return Date(
-      timeIntervalSince1970: calendar.date(from: components)!
-        .timeIntervalSince1970)
+    return calendar.date(from: components)!
   }
   
   func endOfMonth(
