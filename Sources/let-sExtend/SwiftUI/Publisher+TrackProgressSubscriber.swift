@@ -10,35 +10,47 @@ import Foundation
 
 public extension Publisher {
 
-  func trackActivity(with loader: Loader) -> Self {
-    subscribe(TrackProgressSubscriber(loader: loader))
-    return self
+  func trackActivity(
+    with loader: Loader
+  ) -> AnyPublisher<Self.Output, Self.Failure> {
+    Publishers.TrackProgress(self, with: loader)
+      .eraseToAnyPublisher()
   }
 }
 
-private final class TrackProgressSubscriber<Input, Faliure: Error>: Subscriber {
+private extension Publishers {
   
-  var loader: Loader
-  
-  init(loader: Loader) {
-    self.loader = loader
-  }
-  
-  func receive(subscription: Subscription) {
-    DispatchQueue.main.async {
-      self.loader.actionsCount += 1
-      subscription.request(.unlimited)
+  struct TrackProgress<P: Publisher>: Publisher {
+    
+    fileprivate typealias Output = P.Output
+    fileprivate typealias Failure = P.Failure
+    
+    private let publisher: P
+    private let loader: Loader
+    
+    fileprivate init(
+      _ publisher: P,
+      with loader: Loader
+    ) {
+      self.publisher = publisher
+      self.loader = loader
     }
-  }
-  
-  func receive(_ input: Input) -> Subscribers.Demand {
-    return .none
-  }
-  
-  func receive(completion: Subscribers.Completion<Faliure>) {
-    DispatchQueue.main.async {
-      guard self.loader.actionsCount > 0 else { return }
-      self.loader.actionsCount -= 1
+    
+    fileprivate func receive<S>(subscriber: S) where S: Subscriber,
+                                                     Failure == S.Failure,
+                                                     Output == S.Input {
+      publisher
+        .handleEvents(receiveSubscription: { _ in
+          DispatchQueue.main.async {
+            self.loader.actionsCount += 1
+          }
+        }, receiveOutput: { _ in
+          DispatchQueue.main.async {
+            guard self.loader.actionsCount > 0 else { return }
+            self.loader.actionsCount -= 1
+          }
+        })
+        .receive(subscriber: subscriber)
     }
   }
 }
