@@ -45,13 +45,13 @@ private extension Publishers {
             self.loader.actionsCount += 1
           }
         }, receiveOutput: { _ in
-          DispatchQueue.main.async {
+          DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             guard self.loader.actionsCount > 0 else { return }
             self.loader.actionsCount -= 1
           }
         }, receiveCompletion: { completion in
           if case .failure = completion {
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
               guard self.loader.actionsCount > 0 else { return }
               self.loader.actionsCount -= 1
             }
