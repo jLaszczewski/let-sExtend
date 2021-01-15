@@ -40,7 +40,7 @@ public extension Date {
     calendar: Calendar = Calendar.current
   ) -> Date {
     var components = calendar.dateComponents(
-      [.year, .weekOfYear, .month, .weekday],
+      [.yearForWeekOfYear, .weekOfYear, .month],
       from: self)
     components.weekday = calendar.firstWeekday
     
