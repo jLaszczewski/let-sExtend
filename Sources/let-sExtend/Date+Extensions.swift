@@ -14,10 +14,10 @@ public extension Date {
   }
   
   func isSameDay(
-    with date: Date
+    with date: Date?
   ) -> Bool {
     let dateWihoutStamp = withoutTimeStamp()
-    let otherDateWithoutStamp = date.withoutTimeStamp()
+    let otherDateWithoutStamp = date?.withoutTimeStamp()
     
     return dateWihoutStamp == otherDateWithoutStamp
   }
@@ -147,7 +147,7 @@ public extension Date {
   }
 }
 
-extension Date {
+public extension Date {
   
   func dayNumber(calendar: Calendar = .current) -> Int {
     calendar.dateComponents([.day], from: self).day!
