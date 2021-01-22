@@ -5,6 +5,7 @@
 //  Created by ITgenerator on 03/12/2020.
 //
 
+#if !os(macOS)
 import UIKit
 import SwiftUI
 
@@ -107,3 +108,4 @@ struct PageView_Previews: PreviewProvider {
       viewControllers: [])
     }
 }
+#endif

@@ -5,6 +5,7 @@
 //  Created by ITgenerator on 03/12/2020.
 //
 
+#if !os(macOS)
 import UIKit
 import SwiftUI
 
@@ -45,3 +46,4 @@ public struct PageControl: UIViewRepresentable {
     uiView.currentPage = currentPageIndex
   }
 }
+#endif

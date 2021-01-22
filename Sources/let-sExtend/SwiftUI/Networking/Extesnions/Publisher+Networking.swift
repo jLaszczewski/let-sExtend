@@ -39,11 +39,19 @@ public extension Publisher where Output == Data {
   
   func map<D: Decodable>(
     _ type: D.Type,
+    atKeyPath keyPath: String? = nil,
     using decoder: JSONDecoder = JSONDecoder()
   ) -> AnyPublisher<D, Error> {
     tryMap {
       do {
-        return try decoder.decode(type, from: $0)
+        if let keyPath = keyPath,
+           let json = try? JSONSerialization.jsonObject(with: $0),
+           let nestedJson = (json as AnyObject).value(forKeyPath: keyPath),
+           let nestedJsonData = try? JSONSerialization.data(withJSONObject: nestedJson) {
+          return try decoder.decode(type, from: nestedJsonData)
+        } else {
+          return try decoder.decode(type, from: $0)
+        }
       } catch {
         throw error
       }
@@ -51,6 +59,7 @@ public extension Publisher where Output == Data {
     .eraseToAnyPublisher()
   }
 }
+
 
 public extension Publisher {
   

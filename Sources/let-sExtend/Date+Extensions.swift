@@ -146,3 +146,18 @@ public extension Date {
     return (min(date1, date2) ... max(date1, date2)).contains(self)
   }
 }
+
+extension Date {
+  
+  func dayNumber(calendar: Calendar = .current) -> Int {
+    calendar.dateComponents([.day], from: self).day!
+  }
+  
+  func weekdayNumber(calendar: Calendar = .current) -> Int {
+    calendar.dateComponents([.weekday], from: self).weekday!
+  }
+  
+  func yearNumber(calendar: Calendar = .current) -> Int {
+    calendar.dateComponents([.year], from: self).year!
+  }
+}
