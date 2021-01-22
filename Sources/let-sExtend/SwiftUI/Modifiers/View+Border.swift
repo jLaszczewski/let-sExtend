@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-extension View {
+public extension View {
   
-  public func border<S: ShapeStyle>(
+  func border<S: ShapeStyle>(
     _ content: S,
     width: CGFloat = 1,
     cornerRadius: CGFloat
@@ -17,5 +17,30 @@ extension View {
     self.overlay(
       RoundedRectangle(cornerRadius: cornerRadius)
         .strokeBorder(content, lineWidth: width))
+  }
+}
+
+public extension View {
+  
+  func border<S: ShapeStyle>(
+    _ content: S,
+    strokeType: StrokeStyle,
+    cornerRadius: CGFloat
+  ) -> some View {
+    self.overlay(
+      RoundedRectangle(cornerRadius: cornerRadius)
+        .strokeBorder(content, style: strokeType))
+  }
+}
+
+public extension View {
+  
+  func border(
+    edges: [Edge],
+    color: Color,
+    style: StrokeStyle) -> some View {
+    overlay(
+      EdgeBorder(edges: edges)
+        .stroke(color, style: style))
   }
 }

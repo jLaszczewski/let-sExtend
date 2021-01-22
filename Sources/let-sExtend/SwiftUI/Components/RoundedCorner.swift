@@ -5,6 +5,7 @@
 //  Created by Jakub Łaszczewski on 28/12/2020.
 //
 
+#if !os(macOS)
 import SwiftUI
 
 public struct RoundedCorner: Shape {
@@ -30,12 +31,13 @@ public struct RoundedCorner: Shape {
 }
 
 // MARK: - Modifier
-extension View {
+public extension View {
   
-  public func cornerRadius(
+  func cornerRadius(
     _ radius: CGFloat,
     corners: UIRectCorner
   ) -> some View {
     clipShape(RoundedCorner(radius: radius, corners: corners))
   }
 }
+#endif

@@ -5,8 +5,7 @@
 //  Created by Jakub Łaszczewski on 27/11/2020.
 //
 
-import SwiftUI
-
+#if !os(macOS)
 import Combine
 import SwiftUI
 
@@ -143,5 +142,5 @@ public extension Input {
       isFirstResponder = true
     }
   }
-
 }
+#endif
