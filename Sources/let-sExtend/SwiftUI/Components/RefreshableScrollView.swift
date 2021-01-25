@@ -57,12 +57,12 @@ private struct PositionIndicator: View {
 }
 
 // Callback that'll trigger once refreshing is done
-typealias RefreshComplete = () -> Void
+public typealias RefreshComplete = () -> Void
 // The actual refresh action that's called once refreshing starts. It has the
 // RefreshComplete callback to let the refresh action let the View know
 // once it's done refreshing.
 
-typealias OnRefresh = (@escaping RefreshComplete) -> Void
+public typealias OnRefresh = (@escaping RefreshComplete) -> Void
 
 // The offset threshold. 50 is a good number, but you can play
 // with it to your liking.
