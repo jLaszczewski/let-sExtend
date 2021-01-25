@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct ActivityIndicator: UIViewRepresentable {
   
-  typealias UIView = UIActivityIndicatorView
+  public typealias UIView = UIActivityIndicatorView
   
   private var isAnimating = true
   private var configuration = { (indicator: UIView) in }
