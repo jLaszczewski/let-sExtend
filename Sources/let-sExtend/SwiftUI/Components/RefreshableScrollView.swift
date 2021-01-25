@@ -95,7 +95,7 @@ public struct RefreshableScrollView<Content: View>: View {
     self.content = content()
   }
 
-  var body: some View {
+  public var body: some View {
     // The root view is a regular ScrollView
     ScrollView {
       // The ZStack allows us to position the PositionIndicator,
