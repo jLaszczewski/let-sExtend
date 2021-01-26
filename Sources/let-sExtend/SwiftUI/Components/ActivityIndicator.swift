@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  ActivityIndicator.swift
 //  
 //
 //  Created by ITgenerator on 25/01/2021.
