@@ -44,12 +44,9 @@ private extension Publishers {
     fileprivate func receive<S>(subscriber: S) where S: Subscriber,
                                                 Failure == S.Failure,
                                                 Output == S.Input {
-      guard retries > 0
-      else { return publisher.receive(subscriber: subscriber) }
-      
       publisher
         .catch { (error: P.Failure) -> AnyPublisher<Output, Failure> in
-          if condition(error)  {
+          if condition(error) && retries > 0 {
             return ConditionalRetry(publisher, retries - 1, when: condition)
               .delay(for: 3, scheduler: RunLoop.current)
               .eraseToAnyPublisher()
