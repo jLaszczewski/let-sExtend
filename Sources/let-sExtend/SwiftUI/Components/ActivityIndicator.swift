@@ -5,6 +5,7 @@
 //  Created by ITgenerator on 25/01/2021.
 //
 
+#if !os(macOS)
 import SwiftUI
 
 public struct ActivityIndicator: UIViewRepresentable {
@@ -38,3 +39,4 @@ public struct ActivityIndicator: UIViewRepresentable {
     configuration(uiView)
   }
 }
+#endif

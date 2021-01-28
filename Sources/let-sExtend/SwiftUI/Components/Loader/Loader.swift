@@ -5,6 +5,7 @@
 //  Created by Jakub Łaszczewski on 03/12/2020.
 //
 
+import Foundation
 import Combine
 
 public final class Loader: ObservableObject {
@@ -16,7 +17,11 @@ public final class Loader: ObservableObject {
   
   @Published var state: State = .content
   @Published var actionsCount: Int = 0 {
-    willSet { state = newValue > 0 ? .loading : .content }
+    willSet {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+        self?.state = newValue > 0 ? .loading : .content
+      }
+    }
   }
   
   public init(actionsCount: Int = 0) {

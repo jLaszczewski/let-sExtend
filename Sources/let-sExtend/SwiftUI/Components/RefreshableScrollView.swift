@@ -4,6 +4,7 @@
 //
 //
 
+#if !os(macOS)
 import SwiftUI
 
 // There are two type of positioning views - one that scrolls with the content,
@@ -160,3 +161,4 @@ public struct RefreshableScrollView<Content: View>: View {
       }
   }
 }
+#endif
