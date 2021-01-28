@@ -8,6 +8,7 @@
 import SwiftUI
 import WebKit
 
+#if !os(macOS)
 public struct WebView: UIViewRepresentable {
   
   public let url: URL
@@ -30,3 +31,4 @@ public struct WebView: UIViewRepresentable {
     context: UIViewRepresentableContext<WebView>
   ) { }
 }
+#endif
