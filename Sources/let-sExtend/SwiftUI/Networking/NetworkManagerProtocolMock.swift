@@ -11,21 +11,17 @@ import Foundation
 public struct EmptyResponseMock: Encodable {}
 
 public protocol NetworkManagerProtocolMock: NetworkManagerProtocol {
-  
-  var error: URLError? { get set }
 }
 
 public extension NetworkManagerProtocolMock {
   
-  func action<E: Encodable>(
-    response: E? = nil, _ type: E.Type
-  ) -> AnyPublisher<(data: Data, response: URLResponse), URLError> {
-    Future<(data: Data, response: URLResponse), URLError> { promise in
-      let encoder = JSONEncoder()
-      let responseData = try? encoder.encode(response)
-      
-      self.error.isNone
-        ? promise(.success((data: responseData ?? Data(), response: HTTPURLResponse())))
+  func action<E: Encodable, ErrorType: Error>(
+    response: E,
+    error: ErrorType? = nil
+  ) -> AnyPublisher<E, ErrorType> {
+    Future<E, ErrorType> { promise in
+      error.isNone
+        ? promise(.success(response))
         : promise(.failure(error!))
     }
     .prefix(1)

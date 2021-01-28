@@ -12,9 +12,17 @@ public extension Publisher {
   
   func retry(
     _ retries: Int,
-    when condition: @escaping (Failure) -> Bool
+    withDelay delay: UInt32 = 0,
+    when condition: @escaping (Failure) -> Bool,
+    do action: (() -> Self)? = nil
   ) -> AnyPublisher<Self.Output, Self.Failure> {
-    Publishers.ConditionalRetry(self, retries, when: condition)
+    Publishers
+      .ConditionalRetry(
+        self,
+        retries,
+        withDelay: delay,
+        when: condition,
+        do: action)
       .eraseToAnyPublisher()
   }
 }
@@ -29,26 +37,36 @@ private extension Publishers {
     
     private let publisher: P
     private let retries: Int
+    private let delay: UInt32
     private let condition: (P.Failure) -> Bool
+    private let action: (() -> P)?
     
     fileprivate init(
       _ publisher: P,
       _ retries: Int,
-      when condition: @escaping (P.Failure) -> Bool
+      withDelay delay: UInt32,
+      when condition: @escaping (P.Failure) -> Bool,
+      do action: (() -> P)? = nil
     ) {
       self.publisher = publisher
       self.retries = retries
+      self.delay = delay
       self.condition = condition
+      self.action = action
     }
     
     fileprivate func receive<S>(subscriber: S) where S: Subscriber,
-                                                Failure == S.Failure,
-                                                Output == S.Input {
+                                                     Failure == S.Failure,
+                                                     Output == S.Input {
       publisher
         .catch { (error: P.Failure) -> AnyPublisher<Output, Failure> in
           if condition(error) && retries > 0 {
-            return ConditionalRetry(publisher, retries - 1, when: condition)
-              .delay(for: 3, scheduler: RunLoop.current)
+            sleep(UInt32(delay))
+            return ConditionalRetry(
+              action?() ?? publisher,
+              retries - 1,
+              withDelay: delay,
+              when: condition)
               .eraseToAnyPublisher()
           } else {
             return error.fail()
