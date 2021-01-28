@@ -8,18 +8,15 @@
 import Combine
 import Foundation
 
-public struct EmptyResponseMock: Encodable {}
-
-public protocol NetworkManagerProtocolMock: NetworkManagerProtocol {
-}
+public protocol NetworkManagerProtocolMock: NetworkManagerProtocol {}
 
 public extension NetworkManagerProtocolMock {
   
-  func action<E: Encodable, ErrorType: Error>(
-    response: E,
+  func action<ResponseType, ErrorType: Error>(
+    response: ResponseType,
     error: ErrorType? = nil
-  ) -> AnyPublisher<E, ErrorType> {
-    Future<E, ErrorType> { promise in
+  ) -> AnyPublisher<ResponseType, ErrorType> {
+    Future<ResponseType, ErrorType> { promise in
       error.isNone
         ? promise(.success(response))
         : promise(.failure(error!))
