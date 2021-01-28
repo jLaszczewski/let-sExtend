@@ -12,6 +12,10 @@ public struct WebView: UIViewRepresentable {
   
   public let url: URL
   
+  public init(url: URL) {
+    self.url = url
+  }
+  
   public func makeUIView(
     context: UIViewRepresentableContext<WebView>
   ) -> WKWebView {
