@@ -25,7 +25,7 @@ public extension View {
   }
 }
 
-extension View {
+public extension View {
   
   @ViewBuilder
   func `if`<TrueContent: View>(
