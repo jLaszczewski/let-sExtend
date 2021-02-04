@@ -48,6 +48,7 @@ public extension Publisher where Output == Data {
            let json = try? JSONSerialization.jsonObject(with: $0),
            let nestedJson = (json as AnyObject).value(forKeyPath: keyPath),
            let nestedJsonData = try? JSONSerialization.data(withJSONObject: nestedJson) {
+          
           return try decoder.decode(type, from: nestedJsonData)
         } else {
           return try decoder.decode(type, from: $0)
