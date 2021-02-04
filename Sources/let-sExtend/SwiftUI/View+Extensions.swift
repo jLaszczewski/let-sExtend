@@ -24,3 +24,31 @@ public extension View {
     }
   }
 }
+
+extension View {
+  
+  @ViewBuilder
+  func `if`<TrueContent: View>(
+    _ condition: Bool,
+    if ifTransform: (Self) -> TrueContent
+  ) -> some View {
+    if condition {
+      ifTransform(self)
+    } else {
+      self
+    }
+  }
+  
+  @ViewBuilder
+  func `if`<TrueContent: View, FalseContent: View>(
+    _ condition: Bool,
+    if ifTransform: (Self) -> TrueContent,
+    else elseTransform: (Self) -> FalseContent
+  ) -> some View {
+    if condition {
+      ifTransform(self)
+    } else {
+      elseTransform(self)
+    }
+  }
+}
