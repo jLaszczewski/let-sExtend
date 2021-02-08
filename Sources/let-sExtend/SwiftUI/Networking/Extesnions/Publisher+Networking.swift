@@ -75,4 +75,9 @@ public extension Just {
     setFailureType(to: E.self)
       .eraseToAnyPublisher()
   }
+  
+  func withFailureType<E: Error>(_ type: E.Type) -> AnyPublisher<Output, E> {
+    setFailureType(to: type)
+      .eraseToAnyPublisher()
+  }
 }
