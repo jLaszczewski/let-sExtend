@@ -97,12 +97,13 @@ public extension Date {
     return date
   }
   
-  func withCurrentTimestamp(calendar: Calendar = .current) -> Date {
-    let now = Date()
-    
-    let hour = calendar.component(.hour, from: now)
-    let minute = calendar.component(.minute, from: now)
-    let second = calendar.component(.second, from: now)
+  func with(
+    timestampFrom timestamp: Date = Date(),
+    calendar: Calendar = .current
+  ) -> Date {
+    let hour = calendar.component(.hour, from: timestamp)
+    let minute = calendar.component(.minute, from: timestamp)
+    let second = calendar.component(.second, from: timestamp)
     
     var components = calendar.dateComponents(
       [.year, .month, .day, .hour, .minute, .second],
