@@ -97,8 +97,7 @@ public extension Date {
     return date
   }
   
-  var withCurrentTimestamp: Date {
-    let calendar = Calendar.current
+  func withCurrentTimestamp(calendar: Calendar = .current) -> Date {
     let now = Date()
     
     let hour = calendar.component(.hour, from: now)
