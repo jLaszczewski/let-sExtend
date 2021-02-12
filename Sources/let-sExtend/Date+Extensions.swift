@@ -97,8 +97,8 @@ public extension Date {
     return date
   }
   
-  func with(
-    timestampFrom timestamp: Date = Date(),
+  func withNewTimestamp(
+    of timestamp: Date = Date(),
     calendar: Calendar = .current
   ) -> Date {
     let hour = calendar.component(.hour, from: timestamp)
