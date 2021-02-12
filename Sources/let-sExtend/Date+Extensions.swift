@@ -97,6 +97,25 @@ public extension Date {
     return date
   }
   
+  func with(
+    timestampFrom timestamp: Date = Date(),
+    calendar: Calendar = .current
+  ) -> Date {
+    let hour = calendar.component(.hour, from: timestamp)
+    let minute = calendar.component(.minute, from: timestamp)
+    let second = calendar.component(.second, from: timestamp)
+    
+    var components = calendar.dateComponents(
+      [.year, .month, .day, .hour, .minute, .second],
+      from: self)
+          
+    components.hour = hour
+    components.minute = minute
+    components.second = second
+    
+    return calendar.date(from: components)!
+  }
+  
   func byAdding(
     _ value: Int,
     _ component: Calendar.Component,
