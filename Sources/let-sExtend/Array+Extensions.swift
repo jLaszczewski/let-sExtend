@@ -24,6 +24,14 @@ public extension Array {
   }
 }
 
+// MARK: - Hashable
+public extension Array where Element: Hashable {
+  
+  mutating func remove(object: Element) {
+    removeAll { $0 == object }
+  }
+}
+
 // MARK: - Equaltable
 public extension Array where Element: Equatable {
   
