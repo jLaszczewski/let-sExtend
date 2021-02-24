@@ -40,7 +40,7 @@ public struct WillDisappearHandler: UIViewControllerRepresentable {
       fatalError("init(coder:) has not been implemented")
     }
      
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
       super.viewWillDisappear(animated)
       onWillDisappear()
     }
@@ -51,7 +51,7 @@ public struct WillDisappearModifier: ViewModifier {
   
   let callback: () -> Void
     
-  func body(content: Content) -> some View {
+  public func body(content: Content) -> some View {
     content
       .background(WillDisappearHandler(onWillDisappear: callback))
   }
