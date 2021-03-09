@@ -136,6 +136,18 @@ public extension Date {
       .day!
   }
   
+  func weeks(
+    to toDate: Date,
+    rule: FloatingPointRoundingRule,
+    calendar: Calendar = Calendar.current
+  ) -> Int {
+    let fromDate = self.startOfWeek(calendar: calendar)
+    let toDate = toDate.endOfDay(calendar: calendar)
+    let daysCount = fromDate.days(to: toDate, calendar: calendar)
+    
+    return Int((Double(daysCount) / 7).rounded(rule))
+  }
+  
   func months(to toDate: Date, calendar: Calendar = .current) -> Int {
     calendar
       .dateComponents(
