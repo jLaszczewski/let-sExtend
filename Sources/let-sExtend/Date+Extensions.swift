@@ -141,7 +141,7 @@ public extension Date {
     rule: FloatingPointRoundingRule,
     calendar: Calendar = Calendar.current
   ) -> Int {
-    let fromDate = self.startOfWeek(calendar: calendar)
+    let fromDate = startOfDay(calendar: calendar)
     let toDate = toDate.endOfDay(calendar: calendar)
     let daysCount = fromDate.days(to: toDate, calendar: calendar)
     
