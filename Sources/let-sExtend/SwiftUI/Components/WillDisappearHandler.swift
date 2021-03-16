@@ -5,6 +5,7 @@
 //  Created by ITgenerator on 24/02/2021.
 //
 
+#if !os(macOS)
 import SwiftUI
 
 public struct WillDisappearHandler: UIViewControllerRepresentable {
@@ -68,3 +69,5 @@ public extension View {
     }
   }
 }
+
+#endif

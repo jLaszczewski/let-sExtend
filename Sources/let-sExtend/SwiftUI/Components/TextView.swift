@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if !os(macOS)
 public struct TextView: UIViewRepresentable {
   
   @Binding public var text: String
@@ -122,4 +123,4 @@ public struct TextView: UIViewRepresentable {
     }
   }
 }
-
+#endif
