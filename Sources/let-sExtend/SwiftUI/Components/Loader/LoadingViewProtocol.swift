@@ -45,8 +45,8 @@ public struct LoadingView<Content, Style: ProgressViewStyle>: View where Content
         .opacity(loader.state == .loading ? 1 : 0)
       }
       .frame(
-        width: geometry.frame(in: .global).width,
-        height: geometry.frame(in: .global).height)
+        width: geometry.frame(in: .local).width,
+        height: geometry.frame(in: .local).height)
     }
   }
 }
