@@ -100,6 +100,8 @@ public struct Input: UIViewRepresentable {
     _ uiView: UITextField,
     context: UIViewRepresentableContext<Input>
   ) {
+    uiView.setContentHuggingPriority(.defaultHigh, for: .vertical)
+    uiView.setContentHuggingPriority(.defaultLow, for: .horizontal)
     uiView.text = text
     uiView.isSecureTextEntry = isSecure
   }
