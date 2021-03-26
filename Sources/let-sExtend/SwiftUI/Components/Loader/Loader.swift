@@ -16,7 +16,7 @@ public final class Loader: ObservableObject {
   }
   
   @Published var state: State = .content
-  @Published var actionsCount: Int = 0 {
+  @Published public var actionsCount: Int = 0 {
     willSet {
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
         self?.state = newValue > 0 ? .loading : .content
