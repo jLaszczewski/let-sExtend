@@ -18,7 +18,7 @@ public final class Loader: ObservableObject {
   @Published var state: State = .content
   @Published public var actionsCount: Int = 0 {
     willSet {
-      DispatchQueue.global(qos: .userInitiated).sync { [weak self] in
+      DispatchQueue(label: "Loader").sync { [weak self] in
         self?.state = newValue > 0 ? .loading : .content
       }
     }
