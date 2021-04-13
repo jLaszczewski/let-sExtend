@@ -149,7 +149,7 @@ public extension Input {
       let nsString = textField.text as NSString?
       let newText = nsString?.replacingCharacters(
         in: range,
-        with: text
+        with: string
       )
       
       if let replaceInputTextHandler = replaceInputTextHandler {
