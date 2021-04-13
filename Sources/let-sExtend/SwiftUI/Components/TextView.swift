@@ -21,6 +21,9 @@ public struct TextView: UIViewRepresentable {
   private var autocapitalizationType: UITextAutocapitalizationType = .sentences
   private var textFieldBorderStyle: UITextField.BorderStyle = .none
   private var enablesReturnKeyAutomatically: Bool = false
+  
+  private var shouldAllowTextChangeHandler: ((String?) -> Bool)?
+  private var replaceInputTextHandler: ((String?) -> String?)?
   public var onCommit: (() -> Void)?
   
   public init(
@@ -34,6 +37,8 @@ public struct TextView: UIViewRepresentable {
     autocorrectionType: UITextAutocorrectionType = .default,
     autocapitalizationType: UITextAutocapitalizationType = .sentences,
     enablesReturnKeyAutomatically: Bool = false,
+    shouldAllowTextChangeHandler: ((String?) -> Bool)? = nil,
+    replaceInputTextHandler: ((String?) -> String?)? = nil,
     onCommit: (() -> Void)? = nil
   ) {
     self._text = text
@@ -45,6 +50,9 @@ public struct TextView: UIViewRepresentable {
     self.autocorrectionType = autocorrectionType
     self.autocapitalizationType = autocapitalizationType
     self.enablesReturnKeyAutomatically = enablesReturnKeyAutomatically
+    
+    self.shouldAllowTextChangeHandler = shouldAllowTextChangeHandler
+    self.replaceInputTextHandler = replaceInputTextHandler
     self.onCommit = onCommit
   }
   
@@ -74,7 +82,9 @@ public struct TextView: UIViewRepresentable {
     Coordinator(
       text: $text,
       isFirstResponder: $isFirstResponder,
-      onCommit: { onCommit?() })
+      shouldAllowTextChangeHandler: shouldAllowTextChangeHandler,
+      replaceInputTextHandler: replaceInputTextHandler,
+      onCommit: onCommit)
   }
     
   public class Coordinator: NSObject, UITextViewDelegate {
@@ -82,15 +92,22 @@ public struct TextView: UIViewRepresentable {
     @Binding private var text: String
     @Binding private var isFirstResponder: Bool
 
-    private var onCommit: () -> Void
+    var shouldAllowTextChangeHandler: ((String?) -> Bool)?
+    var replaceInputTextHandler: ((String?) -> String?)?
+    var onCommit: (() -> Void)?
 
     init(
       text: Binding<String>,
       isFirstResponder: Binding<Bool>,
-      onCommit: @escaping () -> Void
+      shouldAllowTextChangeHandler: ((String?) -> Bool)?,
+      replaceInputTextHandler: ((String?) -> String?)?,
+      onCommit: (() -> Void)?
     ) {
       self._text = text
       self._isFirstResponder = isFirstResponder
+      
+      self.shouldAllowTextChangeHandler = shouldAllowTextChangeHandler
+      self.replaceInputTextHandler = replaceInputTextHandler
       self.onCommit = onCommit
     }
     
@@ -102,11 +119,34 @@ public struct TextView: UIViewRepresentable {
     
     public func textView(
       _ textView: UITextView,
+      shouldInteractWith textAttachment: NSTextAttachment,
+      in characterRange: NSRange,
+      interaction: UITextItemInteraction
+    ) -> Bool {
+      let nsString = textView.text as NSString?
+      let newText = nsString?.replacingCharacters(
+        in: characterRange,
+        with: text
+      )
+      
+      if let replaceInputTextHandler = replaceInputTextHandler {
+        let replacedText = replaceInputTextHandler(newText)
+        textView.text = shouldAllowTextChangeHandler?(replacedText) == false
+          ? textView.text
+          : replacedText
+        return false
+      }
+      
+      return shouldAllowTextChangeHandler?(newText) ?? true
+    }
+    
+    public func textView(
+      _ textView: UITextView,
       shouldChangeTextIn range: NSRange,
       replacementText text: String
     ) -> Bool {
       isFirstResponder = false
-      onCommit()
+      onCommit?()
       return true
     }
 
