@@ -28,6 +28,8 @@ public struct Input: UIViewRepresentable {
   private var textFieldBorderStyle: UITextField.BorderStyle = .none
   private var enablesReturnKeyAutomatically: Bool = false
   
+  private var shouldAllowTextChangeHandler: ((String?) -> Bool)?
+  private var replaceInputTextHandler: ((String?) -> String?)?
   public var onCommit: (() -> Void)?
   
   public init(
@@ -46,6 +48,8 @@ public struct Input: UIViewRepresentable {
     autocapitalizationType: UITextAutocapitalizationType = .sentences,
     textFieldBorderStyle: UITextField.BorderStyle = .none,
     enablesReturnKeyAutomatically: Bool = false,
+    shouldAllowTextChangeHandler: ((String?) -> Bool)? = nil,
+    replaceInputTextHandler: ((String?) -> String?)? = nil,
     onCommit: (() -> Void)? = nil
   ) {
     self._text = text
@@ -63,6 +67,9 @@ public struct Input: UIViewRepresentable {
     self.autocapitalizationType = autocapitalizationType
     self.textFieldBorderStyle = textFieldBorderStyle
     self.enablesReturnKeyAutomatically = enablesReturnKeyAutomatically
+    
+    self.shouldAllowTextChangeHandler = shouldAllowTextChangeHandler
+    self.replaceInputTextHandler = replaceInputTextHandler
     self.onCommit = onCommit
   }
   
@@ -91,9 +98,9 @@ public struct Input: UIViewRepresentable {
     return Coordinator(
       text: $text,
       isFirstResponder: $isFirstResponder,
-      onCommit: {
-      self.onCommit?()
-    })
+      shouldAllowTextChangeHandler: shouldAllowTextChangeHandler,
+      replaceInputTextHandler: replaceInputTextHandler,
+      onCommit: onCommit)
   }
   
   public func updateUIView(
@@ -115,16 +122,45 @@ public extension Input {
     @Binding var text: String
     @Binding var isFirstResponder: Bool
     
-    var onCommit: () -> Void
+    var shouldAllowTextChangeHandler: ((String?) -> Bool)?
+    var replaceInputTextHandler: ((String?) -> String?)?
+    var onCommit: (() -> Void)?
     
     init(
       text: Binding<String>,
       isFirstResponder: Binding<Bool>,
-      onCommit: @escaping () -> Void
+      shouldAllowTextChangeHandler: ((String?) -> Bool)?,
+      replaceInputTextHandler: ((String?) -> String?)?,
+      onCommit: (() -> Void)?
     ) {
       _text = text
       _isFirstResponder = isFirstResponder
+      
+      self.shouldAllowTextChangeHandler = shouldAllowTextChangeHandler
+      self.replaceInputTextHandler = replaceInputTextHandler
       self.onCommit = onCommit
+    }
+    
+    public func textField(
+      _ textField: UITextField,
+      shouldChangeCharactersIn range: NSRange,
+      replacementString string: String
+    ) -> Bool {
+      let nsString = textField.text as NSString?
+      let newText = nsString?.replacingCharacters(
+        in: range,
+        with: string
+      )
+      
+      if let replaceInputTextHandler = replaceInputTextHandler {
+        let replacedText = replaceInputTextHandler(newText)
+        textField.text = shouldAllowTextChangeHandler?(replacedText) == false
+          ? textField.text
+          : replacedText
+        return false
+      }
+      
+      return shouldAllowTextChangeHandler?(newText) ?? true
     }
     
     public func textFieldDidChangeSelection(_ textField: UITextField) {
@@ -133,7 +169,7 @@ public extension Input {
     
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
       isFirstResponder = false
-      onCommit()
+      onCommit?()
       return true
     }
     

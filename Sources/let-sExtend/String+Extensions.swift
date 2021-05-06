@@ -61,6 +61,25 @@ public extension String {
         }
     } ?? ""
   }
+  
+  var decimalSeparator: String? {
+    contains(".")
+      ? "."
+      : contains(",")
+      ? ","
+      : nil
+  }
+  
+  func withLocaleDecimalSeparator() -> String? {
+    guard let decimalSeparator = decimalSeparator,
+          let localeDecimalSeparator = Locale.current.decimalSeparator
+    else { return nil }
+    
+    return replacingOccurrences(
+      of: decimalSeparator,
+      with: localeDecimalSeparator
+    )
+  }
 }
 
 public extension Optional where Wrapped == String {
