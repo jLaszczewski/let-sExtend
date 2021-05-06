@@ -21,7 +21,7 @@ public protocol RequestProtocol {
   var path: String { get }
   var method: RequestMethod { get }
   var headers: [String: String] { get }
-  var parameters: [String: [String]] { get }
+  var parameters: [RequestParameter] { get }
   var body: Data? { get }
 }
 
@@ -51,27 +51,14 @@ public extension RequestProtocol {
 private extension RequestProtocol {
   
   var queryItems: [URLQueryItem] {
-//    parameters.compactMap { URLQueryItem(name: $0.key, value: $0.value) }
-    
-//    parameters.compactMap { (key, value) in
-//      value.compactMap { value in
-//        URLQueryItem(name: key, value: value)
-//      }
-//    }
     var result: [URLQueryItem] = []
     
-    parameters.forEach { (key, value) in
-      value.forEach {
-        result.append(URLQueryItem(name: key, value: $0))
+    parameters.forEach { parameter in
+      parameter.value.forEach {
+        result.append(URLQueryItem(name: parameter.name, value: $0))
       }
     }
 
     return result
   }
 }
-
-//final class RequestParameters {
-//  
-//  let name: String
-//  let vallue
-//}
