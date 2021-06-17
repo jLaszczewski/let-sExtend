@@ -34,7 +34,9 @@ public extension Binding {
     Binding(
       get: { self.wrappedValue },
       set: { newValue in
-        self.wrappedValue = newValue
+        DispatchQueue.main.async {
+          self.wrappedValue = newValue
+        }
         handler(newValue)
       })
   }
