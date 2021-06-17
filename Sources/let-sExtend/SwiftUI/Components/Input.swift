@@ -110,7 +110,10 @@ public struct Input: UIViewRepresentable {
     uiView.setContentCompressionResistancePriority(
       .defaultLow,
       for: .horizontal)
-    uiView.text = text
+//    uiView.text = text
+    if uiView.text != text {
+      uiView.text = text
+    }
     uiView.isSecureTextEntry = isSecure
   }
 }
