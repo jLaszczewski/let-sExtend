@@ -18,6 +18,7 @@ extension URL {
     )
     urlComponetns?.queryItems = queryItems
     
-    return urlComponetns?.url
+    guard let query = urlComponetns!.query, let baseURL = baseURL else { return }
+    return URL(string: baseURL.absoluteString + query)
   }
 }
